@@ -31,9 +31,9 @@ class UpdateStudentForm extends Form
 
     public function updateStudent($class_id)
     {
-        $this->validate([
-            'email' => 'required|email|unique:students,email,'. $this->student->id
-        ]);
+        // $this->validate([
+        //     'email' => 'required|email|unique:students,email,'. $this->student->id
+        // ]);
         
         $this->student->update([
             'name' => $this->name,

@@ -22,7 +22,7 @@ class CreateStudentForm extends Form
 
     public function storeStudent($class_id)
     {
-        $this->validate();
+        // $this->validate();
         
         Student::create([
             'name' => $this->name,

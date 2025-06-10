@@ -29,9 +29,9 @@ class EditStudent extends Component
     public function updateStudent()
     {
         // dd($this->section_id);
-        // $this->validate([
-        //     'email' => 'required|email|unique:students,email,'. $this->student->id
-        // ]);
+        $this->validate([
+            'form.email' => 'required|email|unique:students,email,'. $this->student->id
+        ]);
         
         // $this->student->update([
         //     'name' => $this->name,

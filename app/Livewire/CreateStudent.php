@@ -29,7 +29,7 @@ class CreateStudent extends Component
     public function addStudent()
     {
         // dd($this->section_id);
-        // $this->validate();
+        $this->validate();      //validate here, kalo x, die xvalidate class_id
         
         // Student::create([
         //     'name' => $this->name,
