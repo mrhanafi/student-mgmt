@@ -18,4 +18,11 @@ class ListStudents extends Component
             'students' => Student::orderBy('id','DESC')->paginate()
         ]);
     }
+
+    public function deleteStudent($studentId)
+    {
+        Student::find($studentId)->delete();
+
+        // return redirect(route('students.index'));
+    }
 }
