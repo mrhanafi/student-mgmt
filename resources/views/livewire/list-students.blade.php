@@ -42,11 +42,18 @@
                                     <tr>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            ID
+                                            <x-sortable column="id" :sortColumn="$sortColumn"
+                                                :sortDirection="$sortDirection"> {{-- ataupun :sortDirection shj sbb da
+                                                declare dlm controller --}}
+                                                ID
+                                            </x-sortable>
                                         </th>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Name
+                                            <x-sortable column="name" :sortColumn="$sortColumn"
+                                                :sortDirection="$sortDirection">
+                                                Name
+                                            </x-sortable>
                                         </th>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
@@ -62,7 +69,10 @@
                                         </th>
                                         <th scope="col"
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Created At
+                                            <x-sortable column="created_at" :sortColumn="$sortColumn"
+                                                :sortDirection="$sortDirection">
+                                                Created At
+                                            </x-sortable>
                                         </th>
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6" />
                                     </tr>
@@ -89,7 +99,7 @@
                                             {{ $student->section->name }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            2 days ago
+                                            {{ $student->created_at->toDateString() }}
                                         </td>
 
                                         <td

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +15,9 @@ class ListStudents extends Component
     
     public string $search = '';
 
+    #[Url()]
+    public string $sortColumn = 'created_at', $sortDirection = 'desc';
+
     // #[Layout('layouts.app')] dah generate livewire config file, xyah pakai da line ni
     public function render()
     {
@@ -21,9 +25,28 @@ class ListStudents extends Component
 
         $query = $this->applySearch($query);
 
+        $query = $this->applySort($query);
+
         return view('livewire.list-students',[
-            'students' => $query->orderBy('id','DESC')->paginate(10)
+            'students' => $query->paginate(10)
+            // 'students' => $query->orderBy('id','DESC')->paginate(10)
         ]);
+    }
+
+    protected function applySort(Builder $query)
+    {
+        return $query->orderBy($this->sortColumn,$this->sortDirection);
+    }
+
+    public function sortBy(string $column)
+    {
+        if($this->sortColumn == $column){
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+        }else{
+            $this->sortDirection = 'asc';
+            $this->sortColumn = $column;
+        }
+        
     }
 
     public function applySearch(Builder $query)
@@ -41,4 +64,12 @@ class ListStudents extends Component
 
         // return redirect(route('students.index'));
     }
+
+    // public function queryString()
+    // {
+    //     return [
+    //         'sortColumn',
+    //         'sortDirection',
+    //     ];
+    // }
 }
