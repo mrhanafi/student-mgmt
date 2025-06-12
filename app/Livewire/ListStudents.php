@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Exports\StudentsExport;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
@@ -17,6 +18,10 @@ class ListStudents extends Component
 
     #[Url()]
     public string $sortColumn = 'created_at', $sortDirection = 'desc';
+
+    public array $selectedStudentIds = [];
+
+ 
 
     // #[Layout('layouts.app')] dah generate livewire config file, xyah pakai da line ni
     public function render()
@@ -58,11 +63,26 @@ class ListStudents extends Component
         });
     }
 
-    public function deleteStudent($studentId)
+    public function deleteStudent(Student $student)
     {
-        Student::find($studentId)->delete();
+        // Authorization check
+        $student->delete();
 
         // return redirect(route('students.index'));
+    }
+
+    public function deleteStudents()
+    {
+        $students = Student::find($this->selectedStudentIds);
+        foreach($students as $student){
+            $this->deleteStudent($student);
+        }
+    }
+
+    public function export()
+    {
+        // dd($this->selectedStudentIds);
+        return (new StudentsExport($this->selectedStudentIds))->download(now().'_students.xlsx');
     }
 
     // public function queryString()
