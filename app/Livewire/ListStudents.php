@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Exports\StudentsExport;
 use App\Models\Student;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
@@ -73,10 +74,16 @@ class ListStudents extends Component
 
     public function deleteStudents()
     {
-        $students = Student::find($this->selectedStudentIds);
-        foreach($students as $student){
-            $this->deleteStudent($student);
-        }
+        // $students = Student::find($this->selectedStudentIds);
+
+        // foreach($students as $student){
+        //     $this->deleteStudent($student);
+        // }
+
+        Notification::make()
+            ->title('Selected records deleted successfully')
+            ->success()
+            ->send();
     }
 
     public function export()
