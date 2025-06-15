@@ -33,7 +33,7 @@ class ListStudents extends Component
 
         $query = $this->applySort($query);
 
-        $students = $query->paginate(10);
+        $students = $query->paginate(5);
 
         // $this->studentIdsOnPage = $students->pluck('id')->toArray();
         $this->studentIdsOnPage = $students->map(fn($student) => (string) $student->id )->toArray();        //tukar ni sbb pluck buat id jdi int, yg ni tukar jdi string (utk kes select all)
