@@ -20,7 +20,7 @@ class ListStudents extends Component
     #[Url()]
     public string $sortColumn = 'created_at', $sortDirection = 'desc';
 
-    public array $selectedStudentIds = [],$studentIdsOnPage = [];
+    public array $selectedStudentIds = [],$studentIdsOnPage = [],$allStudentIds = [];
 
  
 
@@ -32,6 +32,8 @@ class ListStudents extends Component
         $query = $this->applySearch($query);
 
         $query = $this->applySort($query);
+
+        $this->allStudentIds = $query->pluck('id')->map(fn($id) => (string) $id)->toArray();
 
         $students = $query->paginate(5);
 
