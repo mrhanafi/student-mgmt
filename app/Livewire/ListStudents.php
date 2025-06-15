@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Exports\StudentsExport;
 use App\Models\Student;
+use App\Traits\Searchable;
+use App\Traits\Sortable;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
@@ -13,12 +15,12 @@ use Livewire\WithPagination;
 
 class ListStudents extends Component
 {
-    use WithPagination;
+    use WithPagination, Searchable,Sortable;
     
-    public string $search = '';
+    // public string $search = '';
 
-    #[Url()]
-    public string $sortColumn = 'created_at', $sortDirection = 'desc';
+    // #[Url()]
+    // public string $sortColumn = 'created_at', $sortDirection = 'desc';
 
     public array $selectedStudentIds = [],$studentIdsOnPage = [],$allStudentIds = [];
 
@@ -47,30 +49,30 @@ class ListStudents extends Component
         ]);
     }
 
-    protected function applySort(Builder $query)
-    {
-        return $query->orderBy($this->sortColumn,$this->sortDirection);
-    }
+    // protected function applySort(Builder $query)
+    // {
+    //     return $query->orderBy($this->sortColumn,$this->sortDirection);
+    // }
 
-    public function sortBy(string $column)
-    {
-        if($this->sortColumn == $column){
-            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-        }else{
-            $this->sortDirection = 'asc';
-            $this->sortColumn = $column;
-        }
+    // public function sortBy(string $column)
+    // {
+    //     if($this->sortColumn == $column){
+    //         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+    //     }else{
+    //         $this->sortDirection = 'asc';
+    //         $this->sortColumn = $column;
+    //     }
         
-    }
+    // }
 
-    public function applySearch(Builder $query)
-    {
-        return $query->where('name','like','%'.$this->search.'%')
-        ->orWhere('email','like','%'.$this->search.'%')
-        ->orWhereHas('class',function($query){
-            $query->where('name','like','%'.$this->search.'%');
-        });
-    }
+    // public function applySearch(Builder $query)
+    // {
+    //     return $query->where('name','like','%'.$this->search.'%')
+    //     ->orWhere('email','like','%'.$this->search.'%')
+    //     ->orWhereHas('class',function($query){
+    //         $query->where('name','like','%'.$this->search.'%');
+    //     });
+    // }
 
     public function deleteStudent(Student $student)
     {
