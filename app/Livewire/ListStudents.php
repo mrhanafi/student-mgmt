@@ -20,7 +20,7 @@ class ListStudents extends Component
     #[Url()]
     public string $sortColumn = 'created_at', $sortDirection = 'desc';
 
-    public array $selectedStudentIds = [];
+    public array $selectedStudentIds = [],$studentIdsOnPage = [];
 
  
 
@@ -33,8 +33,14 @@ class ListStudents extends Component
 
         $query = $this->applySort($query);
 
+        $students = $query->paginate(10);
+
+        // $this->studentIdsOnPage = $students->pluck('id')->toArray();
+        $this->studentIdsOnPage = $students->map(fn($student) => (string) $student->id )->toArray();        //tukar ni sbb pluck buat id jdi int, yg ni tukar jdi string (utk kes select all)
+        // dd( $this->studentIdsOnPage );
+
         return view('livewire.list-students',[
-            'students' => $query->paginate(10)
+            'students' => $students
             // 'students' => $query->orderBy('id','DESC')->paginate(10)
         ]);
     }
