@@ -9,9 +9,12 @@ use App\Traits\Sortable;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+
+#[Lazy()]
 
 class ListStudents extends Component
 {
@@ -29,6 +32,7 @@ class ListStudents extends Component
     // #[Layout('layouts.app')] dah generate livewire config file, xyah pakai da line ni
     public function render()
     {
+        sleep(2);
         $query = Student::query();
 
         $query = $this->applySearch($query);
@@ -47,6 +51,11 @@ class ListStudents extends Component
             'students' => $students
             // 'students' => $query->orderBy('id','DESC')->paginate(10)
         ]);
+    }
+
+    public function placeholder()
+    {
+        return view('components.table-placeholder');
     }
 
     // protected function applySort(Builder $query)
